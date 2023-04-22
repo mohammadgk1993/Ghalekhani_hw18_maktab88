@@ -1,8 +1,6 @@
 const express = require("express");
+const router = express.Router();
 const { requestHandler } = require("../services/request.handler");
-// const { studentValidationSchema } = require("../validations/student");
-// const { validator } = require("../services/validator");
-// const { paginationSchema } = require("../validations/global");
 const { 
     createFood,
     getAllFoods,
@@ -10,18 +8,20 @@ const {
     updateFood,
     deleteFood
  } = require("../controllers/food");
-const router = express.Router();
-const {createFoodsValidator} = require("../middlewares/foodCrud/foodCrud")
+const {
+    createFoodValidator,
+    findFoodValidator
+} = require("../middlewares/foodCrud/foodCrud")
 
 
-router.post("/", createFoodsValidator,createFood)
+router.post("/", createFoodValidator,createFood)
 
 router.get("/", getAllFoods)
 
-router.get("/:id", readFood)
+router.get("/:id", findFoodValidator, readFood)
 
-router.patch("/:id", updateFood)
+router.patch("/:id", findFoodValidator, updateFood)
 
-router.delete("/:id", deleteFood)
+router.delete("/:id", findFoodValidator, deleteFood)
 
 module.exports = router;

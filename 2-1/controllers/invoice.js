@@ -71,5 +71,5 @@ module.exports = {
     createInvoice,
     readInvoice,
     deleteInvoice,
-    updateInvoice
+    updateInvoice,
 }

@@ -27,17 +27,18 @@ const readFood = async (req,res,next) => {
 
 const deleteFood = async (req,res,next) => {
   const food = Food.destroy({where:{id:req.params.id}})
-  // const invoices = Invoice.findAll({include: { model: Food}})
 
-  // for (let invoice in invoices) {
-  //   if (invoice.Food.length == 0) {
-  //     await Invoice.destroy({where:{id:invoice.id}})
-  //     res.json(invoice.id)
-  //   }
-  // }
+  const invoices = await Invoice.findAll({include: { model: Food}})
+  
+  invoices.map(item => {
+    if (item.Food.length == 0) {
+      Invoice.destroy({where:{id:item.id}})
+    }
+  })
 
   res.status(201).json(food)
 }
+
 
 const updateFood = async (req,res,next) => {
   const updatedFood = {}
