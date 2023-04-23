@@ -7,7 +7,6 @@ const createFoodValidator = async(req,res,next) => {
     if (!!newFood) {
         return next(new AppError("this food is already exists.", 409))
     }
-
     next()
 }
 
