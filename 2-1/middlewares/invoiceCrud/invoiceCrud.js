@@ -4,6 +4,9 @@ const { AppError } = require("../../utils/types");
 
 
 const createInvoiceValidator = async (req,res,next) => {
+    if (!req.body.transactionCode || req.body.transactionCode.length != 12) {
+        return next(new AppError("invalid transactionCode.", 409))
+    }
     const invoice = await Invoice.findOne({ where: {transactionCode:req.body.transactionCode}})
     if (!!invoice) return next(new AppError("this Invoice is already exists.", 409))
     next()
