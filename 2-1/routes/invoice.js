@@ -7,7 +7,6 @@ const {
     updateInvoice,
     readAllInvoices,
 } = require("../controllers/invoice");
-// const { invoiceValidationSchema } = require("../validations/invoice");
 const {
     createInvoiceValidator,
     findInvoiceValidator
