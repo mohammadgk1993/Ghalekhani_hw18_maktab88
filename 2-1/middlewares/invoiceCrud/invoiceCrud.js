@@ -3,13 +3,13 @@ const { Invoice } = require("../../database/models/invoice");
 const { AppError } = require("../../utils/types");
 
 
-const createInvoice = async (req,res,next) => {
-    const invoice = await Invoice.findOne({ where: {transactionCode:req.params.id}})
+const createInvoiceValidator = async (req,res,next) => {
+    const invoice = await Invoice.findOne({ where: {transactionCode:req.body.transactionCode}})
     if (!!invoice) return next(new AppError("this Invoice is already exists.", 409))
     next()
 }
 
-const findInvoice = async (req,res,next) => {
+const findInvoiceValidator = async (req,res,next) => {
     const invoice = await Invoice.findOne({ where: {transactionCode:req.params.id}})
     if (!invoice) return next(new AppError("this Invoice is not exists.", 409))
     next()
@@ -17,5 +17,6 @@ const findInvoice = async (req,res,next) => {
 
 
 module.exports = {
-    findInvoice
+    createInvoiceValidator,
+    findInvoiceValidator
 }

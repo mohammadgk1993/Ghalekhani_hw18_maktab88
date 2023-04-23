@@ -11,8 +11,8 @@ const createFoodValidator = async(req,res,next) => {
 }
 
 const findFoodValidator = async(req,res,next) => {
-    const newFood = await Food.findOne({where: { name: req.body.name },});
-    if (!newFood) {
+    const food = await Food.findOne({where: { name: req.params.name },});
+    if (!food) {
         return next(new AppError("this food is not exists.", 409))
     }
 

@@ -7,7 +7,6 @@ const { FoodInvoice } = require("../database/models/foodInvoice");
 
 
 const createInvoice = async (req,res,next) => {
-  try {
     const invoice = await Invoice.create({transactionCode: req.body.transactionCode,});
     const student = await Student.findOne({studentCode:req.body.studentCode});
     if (student) await student.addInvoice(invoice);
@@ -17,45 +16,29 @@ const createInvoice = async (req,res,next) => {
       await FoodInvoice.create({InvoiceId:invoice.id,FoodId:food.id})
     }
     res.status(201).json(invoice)
-  } catch (error) {
-    next(AppError("server Error",500))
-  }
 }
 
 const readAllInvoices = async (req,res,next) => {
-  try {
     const invoices = await Invoice.findAll({include: { model: Food}})
     res.status(201).json(invoices)
-  } catch (error) {
-    next(AppError("server Error",500))
-  }
 }
 
 const readInvoice = async (req,res,next) => {
-  try {
     const invoice = await Invoice.findOne({ where: {transactionCode:req.params.id}, include: { model: Food}})
 
     const foodInvoice = await FoodInvoice.findAll({where:{InvoiceId:invoice.id}})
     // const foodInvoice = await FoodInvoice.findOne({where:{InvoiceId:invoice.id}})
     res.status(201).json(invoice)
-  } catch (error) {
-    next(AppError("server Error",500))
-  }
 }
 
 
 const deleteInvoice = async (req,res,next) => {
-  try {
     const invoice = await Invoice.destroy({ where: {transactionCode:req.params.id}})
     res.status(201).json(invoice)
-  } catch (error) {
-    next(AppError("server Error",500))
-  }
 }
 
 
 const updateInvoice = async (req,res,next) => {
-  try {
     let studentCode
     let foods = []
 
@@ -76,10 +59,6 @@ const updateInvoice = async (req,res,next) => {
     }
     
     res.status(201).json(invoice)
-    
-  } catch (error) {
-    next(AppError("server Error",500))
-  }
 }
 
 

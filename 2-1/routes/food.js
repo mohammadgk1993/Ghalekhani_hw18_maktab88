@@ -14,14 +14,14 @@ const {
 } = require("../middlewares/foodCrud/foodCrud")
 
 
-router.post("/", createFoodValidator,createFood)
+router.post("/", createFoodValidator, requestHandler(createFood))
 
-router.get("/", getAllFoods)
+router.get("/", requestHandler(getAllFoods))
 
-router.get("/:id", findFoodValidator, readFood)
+router.get("/:name", findFoodValidator, requestHandler(readFood))
 
-router.patch("/:id", findFoodValidator, updateFood)
+router.patch("/:name", findFoodValidator, requestHandler(updateFood))
 
-router.delete("/:id", findFoodValidator, deleteFood)
+router.delete("/:name", findFoodValidator, requestHandler(deleteFood))
 
 module.exports = router;
